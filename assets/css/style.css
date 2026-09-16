@@ -1,0 +1,1739 @@
+/* ==========================================================================
+   PayrollKu - Minimalist Clean Flat Design System
+   Sederhana, Rapi, & Sangat Mudah Dibuat Ulang di Figma
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+:root {
+    --font-primary: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    
+    /* Palet Warna Minimalis Flat */
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --border-dark: #cbd5e1;
+
+    /* Aksen Warna */
+    --primary: #2563eb;
+    --primary-light: #eff6ff;
+    --primary-dark: #1d4ed8;
+    
+    --success: #16a34a;
+    --success-light: #f0fdf4;
+    --danger: #dc2626;
+    --danger-light: #fef2f2;
+    --warning: #d97706;
+    --warning-light: #fffbeb;
+    
+    /* Tombol Aksi */
+    --whatsapp: #16a34a;
+    --pdf-red: #e11d48;
+    --email-blue: #0284c7;
+
+    /* Tanpa Bayangan Berlapis yang Kompleks (Flat & Bersih) */
+    --radius-sm: 6px;
+    --radius: 8px;
+    --radius-lg: 12px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-primary);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+button, input, select, textarea {
+    font-family: var(--font-primary);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.container {
+    width: min(1140px, calc(100% - 32px));
+    margin: 0 auto;
+}
+
+.narrow {
+    max-width: 760px;
+}
+
+/* ==========================================================================
+   Layout Wrapper & Sidebar Navigation (Clean Flat & Toggleable)
+   ========================================================================== */
+.layout-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background: var(--bg);
+    position: relative;
+}
+
+/* Sidebar Utama — Fixed agar tetap terlihat saat scroll */
+.sidebar {
+    width: 255px;
+    min-width: 255px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+/* Ketika Sidebar Ditutup (Collapsed) */
+.layout-wrapper.sidebar-collapsed .sidebar {
+    transform: translateX(-100%);
+}
+
+.sidebar-header {
+    padding: 16px 16px 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.brand {
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-menu-wrapper {
+    padding: 18px 12px;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Sembunyikan scrollbar tapi tetap bisa di-scroll */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-dark) transparent;
+}
+
+.sidebar-menu-wrapper::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar-menu-wrapper::-webkit-scrollbar-thumb {
+    background: var(--border-dark);
+    border-radius: 4px;
+}
+
+.sidebar-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding: 4px 12px 10px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    color: #334155;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-link i {
+    font-size: 1.05rem;
+    width: 20px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.sidebar-link:hover {
+    background: #f1f5f9;
+    color: var(--text);
+}
+
+.sidebar-link:hover i {
+    color: var(--text);
+}
+
+.sidebar-link.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.sidebar-link.active i {
+    color: var(--primary);
+}
+
+/* Sidebar Footer (User Info & Logout) */
+.sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid var(--border);
+    background: #fafafa;
+    flex-shrink: 0;
+}
+
+.user-card-sidebar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding: 6px 8px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.user-avatar-sidebar {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius);
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.user-meta-sidebar {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.user-name-sidebar {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-role-sidebar {
+    font-size: 0.74rem;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.sidebar-logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 12px;
+    background: var(--danger-light);
+    border: 1px solid #fecaca;
+    color: var(--danger);
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+.sidebar-logout-btn:hover {
+    background: #fee2e2;
+}
+
+/* Main Content Area — offset dari sidebar yang fixed */
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 100vh;
+    margin-left: 255px;
+    transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.layout-wrapper.sidebar-collapsed .content-wrapper {
+    margin-left: 0;
+}
+
+/* Content Topbar with Toggle (Buka/Tutup Sidebar) */
+.content-topbar {
+    min-height: 52px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar-brand-indicator {
+    display: none;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--primary);
+    align-items: center;
+    gap: 8px;
+}
+
+.layout-wrapper.sidebar-collapsed .topbar-brand-indicator {
+    display: inline-flex;
+}
+
+/* Tombol Toggle Sidebar — Premium Style */
+.btn-sidebar-toggle {
+    width: 36px;
+    height: 36px;
+    background: var(--primary-light);
+    border: 1.5px solid rgba(37, 99, 235, 0.2);
+    border-radius: var(--radius);
+    color: var(--primary);
+    cursor: pointer;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.18s ease;
+    flex-shrink: 0;
+}
+
+.btn-sidebar-toggle:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    transform: scale(1.05);
+}
+
+.btn-sidebar-toggle:active {
+    transform: scale(0.97);
+}
+
+.user-pill-sm {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f8fafc;
+    padding: 5px 12px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+/* ==========================================================================
+   Page Layout & Common Containers
+   ========================================================================== */
+.page {
+    min-height: calc(100vh - 130px);
+    padding: 32px 0 48px;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+/* Hero Section (Dashboard) */
+.hero {
+    margin-bottom: 28px;
+}
+
+.badge,
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    line-height: 1.2;
+    margin: 8px 0 10px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.hero p,
+.page-heading p,
+.formula-small {
+    color: var(--muted);
+    font-size: 0.98rem;
+    margin: 0;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.hero-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    text-align: center;
+}
+
+.hero-label {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 0.88rem;
+}
+
+.formula {
+    margin: 8px 0 4px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--text);
+}
+
+/* Stat Cards (Dashboard) */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius);
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.stat-card span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.stat-card strong {
+    display: block;
+    margin-top: 2px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text);
+}
+
+/* Page Heading */
+.page-heading {
+    margin-bottom: 20px;
+}
+
+.page-heading h1 {
+    margin: 4px 0 6px;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.section-title,
+.payslip-head,
+.detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.section-title h2,
+.section-title h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   Buttons (Flat & Konsisten)
+   ========================================================================== */
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn.primary {
+    background: var(--primary);
+    color: white;
+}
+.btn.primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn.secondary {
+    border-color: var(--border-dark);
+    background: white;
+    color: #334155;
+}
+.btn.secondary:hover {
+    background: #f8fafc;
+}
+
+.btn-pdf {
+    background: var(--pdf-red);
+    color: white;
+}
+.btn-pdf:hover {
+    background: #be123c;
+}
+
+.btn-whatsapp {
+    background: var(--whatsapp);
+    color: white;
+}
+.btn-whatsapp:hover {
+    background: #15803d;
+}
+
+.btn-email {
+    background: var(--email-blue);
+    color: white;
+}
+.btn-email:hover {
+    background: #0369a1;
+}
+
+.btn-print {
+    background: #475569;
+    color: white;
+}
+.btn-print:hover {
+    background: #334155;
+}
+
+/* Action Button Toolbar */
+.integration-toolbar {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: var(--radius);
+}
+
+.integration-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.integration-info i {
+    font-size: 1.25rem;
+    color: var(--primary);
+}
+
+.integration-info strong {
+    display: block;
+    font-size: 0.95rem;
+}
+
+.integration-info span {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.action-buttons-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* ==========================================================================
+   Tables & Search Toolbar
+   ========================================================================== */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.search-bar {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    max-width: 440px;
+}
+
+.search-bar input {
+    flex: 1;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+th, td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: middle;
+    font-size: 0.9rem;
+}
+
+th {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    background: #f8fafc;
+    font-weight: 700;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background: #f8fafc;
+}
+
+.badge-role {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    color: #334155;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.actions {
+    white-space: nowrap;
+}
+
+.actions-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: nowrap;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    background: white;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+
+.btn-action:hover {
+    background: #f1f5f9;
+    transform: translateY(-1px);
+}
+
+.btn-action.detail {
+    color: var(--primary);
+    border-color: #bfdbfe;
+    background: #eff6ff;
+}
+.btn-action.detail:hover {
+    background: #dbeafe;
+    border-color: #93c5fd;
+}
+
+.btn-action.pdf {
+    color: var(--pdf-red);
+    border-color: #fecdd3;
+    background: #fff1f2;
+}
+.btn-action.pdf:hover {
+    background: #ffe4e6;
+    border-color: #fda4af;
+}
+
+.btn-action.whatsapp {
+    color: var(--whatsapp);
+    border-color: #bbf7d0;
+    background: #f0fdf4;
+}
+.btn-action.whatsapp:hover {
+    background: #dcfce7;
+    border-color: #86efac;
+}
+
+.btn-action.email {
+    color: var(--email-blue);
+    border-color: #bae6fd;
+    background: #f0f9ff;
+}
+.btn-action.email:hover {
+    background: #e0f2fe;
+    border-color: #7dd3fc;
+}
+
+.btn-action.edit {
+    color: #475569;
+    border-color: #e2e8f0;
+    background: #f8fafc;
+}
+.btn-action.edit:hover {
+    color: var(--primary);
+    border-color: #cbd5e1;
+    background: #f1f5f9;
+}
+
+.btn-action.delete {
+    color: var(--danger);
+    border-color: #fecaca;
+    background: #fef2f2;
+}
+.btn-action.delete:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+/* ==========================================================================
+   Action Dropdown Component (Minimalist SaaS Style)
+   ========================================================================== */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+.dropdown summary::-webkit-details-marker {
+    display: none;
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+    min-width: 180px;
+    z-index: 100;
+    padding: 6px 0;
+    display: flex;
+    flex-direction: column;
+    animation: dropdownFadeIn 0.15s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Jika baris mendekati bawah tabel, buka ke atas (dropup) */
+tr:last-child .dropdown-menu,
+tr:nth-last-child(2) .dropdown-menu {
+    top: auto;
+    bottom: calc(100% + 6px);
+}
+
+.dropdown-menu a,
+.dropdown-menu button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.dropdown-menu a i,
+.dropdown-menu button i {
+    width: 16px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
+    background: #f1f5f9;
+}
+
+.dropdown-menu hr {
+    margin: 4px 0;
+    border: none;
+    border-top: 1px solid var(--border);
+}
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 32px;
+}
+
+/* ==========================================================================
+   Forms & Inputs (Clean Flat)
+   ========================================================================== */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #334155;
+}
+
+.req {
+    color: var(--danger);
+}
+
+input,
+select {
+    width: 100%;
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    background: white;
+    color: var(--text);
+    font: inherit;
+    font-size: 0.92rem;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary);
+    outline: 2px solid rgba(37, 99, 235, 0.2);
+}
+
+.formula-box {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: #f8fafc;
+    color: #334155;
+    font-size: 0.88rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* ==========================================================================
+   Payroll Calculation Table (Wireframe UKK Style)
+   ========================================================================== */
+.payroll-calc-table {
+    border: 1.5px solid var(--border-dark);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface);
+}
+
+.payroll-calc-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #f1f5f9;
+    border-bottom: 1.5px solid var(--border-dark);
+}
+
+.calc-col {
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.calc-col.penghasilan {
+    color: var(--success);
+    border-right: 1.5px solid var(--border-dark);
+    background: #f0fdf4;
+}
+
+.calc-col.potongan {
+    color: var(--danger);
+    background: #fef2f2;
+}
+
+.payroll-calc-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.calc-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+}
+
+.calc-row:last-child {
+    border-bottom: none;
+}
+
+.calc-cell {
+    padding: 9px 12px;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+}
+
+.calc-cell.label {
+    color: #475569;
+    font-weight: 500;
+    background: #fafafa;
+    border-right: 1px solid var(--border);
+}
+
+.calc-cell.input {
+    background: var(--surface);
+}
+
+.calc-cell.input:nth-child(2) {
+    border-right: 1.5px solid var(--border-dark);
+}
+
+/* Input with Rp prefix */
+.input-rp-wrap {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 0;
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: white;
+}
+
+.input-rp-wrap:focus-within {
+    border-color: var(--primary);
+    outline: 2px solid rgba(37, 99, 235, 0.15);
+    outline-offset: 0;
+}
+
+.rp-prefix {
+    padding: 6px 8px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border-right: 1px solid var(--border);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.input-rp-wrap input {
+    border: none;
+    outline: none;
+    border-radius: 0;
+    padding: 6px 8px;
+    font-size: 0.88rem;
+    width: 100%;
+    background: transparent;
+}
+
+.input-rp-wrap input:focus {
+    border: none;
+    outline: none;
+}
+
+/* Subtotal Row */
+.calc-row.subtotal-row {
+    background: #f8fafc;
+    border-top: 1.5px solid var(--border-dark);
+}
+
+.calc-cell.subtotal-label {
+    font-weight: 700;
+    color: var(--text);
+    background: #f1f5f9;
+}
+
+.calc-cell.subtotal-val {
+    font-weight: 700;
+    font-size: 0.92rem;
+}
+
+.calc-cell.subtotal-val.positive {
+    color: var(--success);
+}
+
+.calc-cell.subtotal-val.negative {
+    color: var(--danger);
+}
+
+/* Net Salary Row */
+.payroll-calc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-top: 2px solid var(--border-dark);
+}
+
+.calc-net-label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.calc-net-value {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--success);
+    transition: color 0.2s ease;
+}
+
+/* ==========================================================================
+   Alerts & Feedback
+   ========================================================================== */
+.alert {
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.alert.success {
+    background: var(--success-light);
+    color: var(--success);
+    border: 1px solid #bbf7d0;
+}
+
+.alert.error {
+    background: var(--danger-light);
+    color: var(--danger);
+    border: 1px solid #fecaca;
+}
+
+.alert ul {
+    margin: 4px 0 0;
+    padding-left: 18px;
+}
+
+/* ==========================================================================
+   CAPTCHA Box (Sederhana & Bersih)
+   ========================================================================== */
+.captcha-card {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    padding: 16px;
+    border-radius: var(--radius);
+    margin-top: 6px;
+}
+
+.captcha-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.captcha-header label {
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.captcha-box-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.captcha-badge {
+    background: #ffffff;
+    border: 1px solid var(--border-dark);
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+}
+
+.captcha-noise-line {
+    display: none; /* Sembunyikan garis noise agar di Figma cuma kotak teks */
+}
+
+.captcha-digit {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--text);
+    display: inline-block;
+}
+
+.captcha-digit.tilt-left,
+.captcha-digit.tilt-right {
+    transform: none; /* Hilangkan kemiringan agar flat dan bersih */
+}
+
+.captcha-digit.op {
+    color: var(--primary);
+    margin: 0 4px;
+}
+
+.btn-refresh-captcha {
+    background: #ffffff;
+    border: 1px solid var(--border-dark);
+    color: #334155;
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-refresh-captcha:hover {
+    background: #f1f5f9;
+}
+
+.btn-refresh-captcha.spinning i {
+    animation: fa-spin 0.6s linear infinite;
+}
+
+.captcha-note {
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ==========================================================================
+   Slip Gaji (Clean Document Format)
+   ========================================================================== */
+.payslip {
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    position: relative;
+}
+
+.payslip-badge-top {
+    position: absolute;
+    top: 0;
+    right: 24px;
+    background: var(--primary);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.payslip-head {
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.payslip-head h2 {
+    margin: 2px 0;
+    font-size: 1.5rem;
+    color: var(--text);
+}
+
+.role-text {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+.status-badge {
+    border-radius: 4px;
+    padding: 4px 10px;
+    background: var(--success-light);
+    color: var(--success);
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid #bbf7d0;
+}
+
+.meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 18px 0;
+}
+
+.meta-grid div {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: #f8fafc;
+}
+
+.meta-grid span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.meta-grid strong {
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.section-divider-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #475569;
+    padding: 10px 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+}
+
+.detail-list {
+    padding: 4px 0 12px;
+}
+
+.detail-row {
+    padding: 8px 0;
+    border-bottom: 1px solid #f8fafc;
+    font-size: 0.92rem;
+}
+
+.detail-row.subtotal {
+    font-weight: 700;
+    padding: 10px 12px;
+    border-radius: var(--radius);
+    margin: 6px 0 10px;
+}
+
+.detail-row.subtotal.positive {
+    background: #f0fdf4;
+    color: var(--success);
+    border: 1px solid #bbf7d0;
+}
+
+.detail-row.subtotal.negative {
+    background: #fef2f2;
+    color: var(--danger);
+    border: 1px solid #fecaca;
+}
+
+.net-salary-highlight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border-radius: var(--radius);
+    background: var(--primary-light);
+    border: 1px solid #bfdbfe;
+    color: var(--text);
+    margin-top: 12px;
+}
+
+.net-label span {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.net-label small {
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.net-amount {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+}
+
+.payslip-footer-note {
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: center;
+}
+
+/* ==========================================================================
+   Authentication Pages (Login / Register / Lupa Password - Clean Flat)
+   ========================================================================== */
+.auth-body {
+    background: #f1f5f9; /* Flat Light Gray, sangat gampang dibuat di Figma! */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+    margin: auto;
+}
+
+.auth-card {
+    background: var(--surface);
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.auth-logo {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 12px;
+    border-radius: var(--radius);
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.auth-header h1 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 4px;
+}
+
+.auth-header p {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin: 0;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.auth-form .field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.auth-form label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius);
+    font-size: 0.92rem;
+    font-family: inherit;
+    background: #ffffff;
+}
+
+.auth-form input:focus {
+    border-color: var(--primary);
+    outline: 2px solid rgba(37, 99, 235, 0.2);
+}
+
+.password-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-wrap input {
+    padding-right: 40px;
+}
+
+.btn-toggle-pwd {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 0.95rem;
+    padding: 4px;
+}
+
+.btn-toggle-pwd:hover {
+    color: var(--text);
+}
+
+.auth-link-sm {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.auth-link-sm:hover {
+    text-decoration: underline;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 11px 16px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: var(--radius);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--primary);
+    color: white;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.auth-btn:hover {
+    background: var(--primary-dark);
+}
+
+.demo-account-box {
+    margin-top: 16px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.8rem;
+    color: #475569;
+}
+
+.demo-account-box strong {
+    display: block;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.demo-account-box code {
+    background: #ffffff;
+    padding: 2px 5px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.auth-link {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.footer {
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* ==========================================================================
+   Media Queries (Responsive & Mobile Sidebar)
+   ========================================================================== */
+@media (max-width: 880px) {
+    /* Sidebar sudah position:fixed — di mobile, sidebar mulai tersembunyi */
+    .sidebar {
+        transform: translateX(-100%);
+        box-shadow: 4px 0 25px rgba(0,0,0,0.15);
+    }
+
+    .layout-wrapper.sidebar-open .sidebar {
+        transform: translateX(0);
+    }
+
+    /* Content wrapper tidak perlu margin di mobile karena sidebar fixed & hidden */
+    .content-wrapper {
+        margin-left: 0 !important;
+    }
+
+    .sidebar-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.4);
+        z-index: 90;
+    }
+
+    .layout-wrapper.sidebar-open .sidebar-backdrop {
+        display: block;
+    }
+
+    .topbar-brand-indicator {
+        display: inline-flex !important;
+    }
+
+    .content-topbar {
+        padding: 8px 16px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .meta-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 620px) {
+    .form-grid,
+    .meta-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field.full {
+        grid-column: auto;
+    }
+
+    .search-bar {
+        max-width: 100%;
+    }
+
+    .payslip-head,
+    .section-title,
+    .net-salary-highlight {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .action-buttons-group {
+        flex-direction: column;
+    }
+    .action-buttons-group .btn {
+        width: 100%;
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .no-print,
+    .sidebar,
+    .topbar,
+    .footer,
+    .integration-toolbar,
+    .form-actions {
+        display: none !important;
+    }
+
+    .layout-wrapper {
+        display: block;
+    }
+
+    .content-wrapper {
+        display: block;
+        min-height: auto;
+        margin-left: 0 !important;
+    }
+
+    .page {
+        min-height: auto;
+        padding: 0;
+    }
+
+    .payslip {
+        border: 1px solid #000000;
+        padding: 16px;
+    }
+}
+
